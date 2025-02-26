@@ -26,13 +26,13 @@ Install frontend dependencies:
 4. **Start the application**
 In separate terminals:
 
-Backend:
+- Backend:
   ```bash
   > cd backend
   > node server.js`
-```
-Frontend:
+  ```
+- Frontend:
   ```bash
   > cd frontend
   > npm start
-```
+  ```
