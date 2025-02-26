@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Add this import
+import { useNavigate } from 'react-router-dom'; 
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem('token');
+      console.log('[Frontend] Token:', token); // Check if token exists
+
       if (!token) {
-        navigate('/login'); // Redirect if no token
+        navigate('/login');
         return;
       }
 
@@ -19,10 +20,11 @@ const Profile = () => {
         const res = await axios.get('http://localhost:5000/api/auth/user', {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log('[Frontend] Profile Data:', res.data); // Log response
         setUser(res.data);
       } catch (err) {
-        setError('Failed to fetch profile');
-        localStorage.removeItem('token'); // Clear invalid token
+        console.error('[Frontend] Error:', err.response?.data || err.message);
+        localStorage.removeItem('token');
         navigate('/login');
       }
     };
@@ -32,11 +34,13 @@ const Profile = () => {
   return (
     <div>
       <h1>Profile</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
       {user ? (
-        <p>Welcome, {user.username}</p>
+        <div>
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
+        </div>
       ) : (
-        <p>Loading...</p> // Show loading state
+        <p>Loading...</p>
       )}
     </div>
   );
