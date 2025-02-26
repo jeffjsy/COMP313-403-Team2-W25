@@ -9,8 +9,6 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem('token');
-      console.log('[Frontend] Token:', token); // Check if token exists
-
       if (!token) {
         navigate('/login');
         return;
@@ -20,7 +18,11 @@ const Profile = () => {
         const res = await axios.get('http://localhost:5000/api/auth/user', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log('[Frontend] Profile Data:', res.data); // Log response
+        console.log('[Frontend] Profile Data:', res.data);
+        
+        // Store user data in localStorage
+        localStorage.setItem('user', JSON.stringify(res.data));
+        
         setUser(res.data);
       } catch (err) {
         console.error('[Frontend] Error:', err.response?.data || err.message);
@@ -32,12 +34,12 @@ const Profile = () => {
   }, [navigate]);
 
   return (
-    <div>
+    <div className="profile-container">
       <h1>Profile</h1>
       {user ? (
-        <div>
-          <p>Username: {user.username}</p>
-          <p>Email: {user.email}</p>
+        <div className="profile-info">
+          <p><strong>Username:</strong> {user.username}</p>
+          <p><strong>Email:</strong> {user.email}</p>
         </div>
       ) : (
         <p>Loading...</p>
