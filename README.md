@@ -22,19 +22,17 @@ Install frontend dependencies:
   ```bash
   mongo
   > use budget-planner
-  > exit
 
 4. **Start the application**
 In separate terminals:
 
 Backend:
-
-cd backend
-
-node server.js
-
+  ```bash
+  > cd backend
+  > node server.js`
+```
 Frontend:
-
-cd frontend
-
-npm start
+  ```bash
+  > cd frontend
+  > npm start
+```
