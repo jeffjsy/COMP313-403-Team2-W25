@@ -1,0 +1,82 @@
+.planner-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.goal-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.goal-form input,
+.goal-form button {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.goal-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.goal-item {
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.progress-bar {
+    height: 10px;
+    width: 100px;
+    background: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #4caf50;
+}
+
+.progress-update {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-update input {
+    width: 80px;
+    padding: 5px;
+}
+
+.increment-button {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.increment-button:hover {
+    background: #45a049;
+}
+
+.delete-button {
+    background: white;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.delete-button:hover {
+    background: white;
+}
