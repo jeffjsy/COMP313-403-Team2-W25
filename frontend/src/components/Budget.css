@@ -1,0 +1,109 @@
+.budget-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.budget-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    transition: transform 0.2s;
+}
+
+.budget-item:hover {
+    transform: scale(1.01);
+}
+
+.budget-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.add-button, .subtract-button, .delete-button {
+    padding: 2px 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.add-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.subtract-button {
+    background-color: #FFA500;
+    color: white;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.add-button:hover {
+    background-color: #45a049;
+}
+
+.subtract-button:hover {
+    background-color: #ff9800;
+}
+
+.delete-button:hover {
+    background-color: #e53935;
+}
+
+.progress-bar {
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 5px 0;
+    height: 10px;  /* 🟢 Smaller height for compact look */
+}
+
+.progress-fill {
+    text-align: center;
+    color: white;
+    line-height: 10px;  /* 🟢 Adjusted to match new height */
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+    height: 10px;  /* 🟢 Match progress bar height */
+}
+
+.budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.budget-header h4 {
+    margin: 0;
+}
+
+.budget-header p {
+    margin: 0;
+    color: #555;
+}
+
+.add-budget-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background-color 0.3s;
+}
+
+.add-budget-button:hover {
+    background-color: #0056b3;
+}

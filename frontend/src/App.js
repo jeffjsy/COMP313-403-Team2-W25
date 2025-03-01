@@ -4,7 +4,8 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
-import Planner from './components/Planner';
+import Goals from './components/Goals';
+import Budget from "./components/Budget";
 
 function App() {
   return (
@@ -15,8 +16,9 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/budget" element={<Budget/>} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/planner" element={<Planner />} />
+          <Route path="/goals" element={<Goals />} />
         </Routes>
       </div>
     </Router>
