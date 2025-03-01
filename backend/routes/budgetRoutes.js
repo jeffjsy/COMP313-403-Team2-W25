@@ -4,7 +4,7 @@ const Budget = require("../models/Budget");
 
 const router = express.Router();
 
-// 🟢 Create a new budget (POST /api/budgets/add)
+
 router.post("/add", authMiddleware, async (req, res) => {
     const { category, targetAmount, currentAmount = 0 } = req.body;
     console.log("Received data:", req.body);  // 🟢 Log incoming data
@@ -30,7 +30,6 @@ router.post("/add", authMiddleware, async (req, res) => {
 });
 
 
-// 🟢 Get all budgets (GET /api/budgets)
 router.get("/", authMiddleware, async (req, res) => {
     try {
         const budgets = await Budget.find({ userId: req.user.id });
@@ -41,7 +40,6 @@ router.get("/", authMiddleware, async (req, res) => {
     }
 });
 
-// 🟢 Add amount to a budget
 router.put("/update/:id/add", authMiddleware, async (req, res) => {
     const { amount } = req.body;
     try {
@@ -57,7 +55,6 @@ router.put("/update/:id/add", authMiddleware, async (req, res) => {
     }
 });
 
-// 🟢 Subtract amount from a budget
 router.put("/update/:id/subtract", authMiddleware, async (req, res) => {
     const { amount } = req.body;
     try {

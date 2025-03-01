@@ -1,12 +1,10 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const GoalSchema = new mongoose.Schema({
-    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    title: {type: String, required: true},
-    targetAmount: {type: Number, required: true},
-    currentAmount: {type: Number, default: 0},
-    deadline: {type: Date, required: true},
-    status: {type: String, enum: ['in-progress', 'overdue', 'completed'], default: 'in-progress'}
-},  {timestamps: true});
+const BudgetSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    category: { type: String, required: true },
+    targetAmount: { type: Number, required: true },
+    currentAmount: { type: Number, default: 0 },
+});
 
-module.exports = mongoose.model('Goal', GoalSchema);
+module.exports = mongoose.model("Budget", BudgetSchema);
