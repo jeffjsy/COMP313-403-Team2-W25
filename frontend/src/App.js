@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Profile from './components/Profile';
 import Goals from './components/Goals';
 import Budget from "./components/Budget";
+import RecurringTransactions from "./components/RecurringTransactions";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/budget" element={<Budget/>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/goals" element={<Goals />} />
+          <Route path="/recurring-transactions" element={<RecurringTransactions />} />
         </Routes>
       </div>
     </Router>

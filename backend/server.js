@@ -5,6 +5,7 @@ const connectDB = require('./db');
 const authRoutes = require('./routes/Auth');
 const goalRoutes = require('./routes/goalRoutes');
 const budgetsRoutes = require('./routes/budgetRoutes');
+const recurringRoutes = require('./routes/recurringRoutes');
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/goals', goalRoutes);
 app.use('/api/budgets', budgetsRoutes);
+app.use('/api/recurring-transactions', recurringRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

@@ -27,8 +27,9 @@ const Navbar = () => {
         {isLoggedIn && (
           <>
             <Link to="/planner" className="nav-link">Planner</Link>
-              <Link to="/budget" className="nav-link">Budget</Link>
-              <Link to="/goals" className="nav-link">Goals</Link>
+            <Link to="/budget" className="nav-link">Budget</Link>
+            <Link to="/goals" className="nav-link">Goals</Link>
+            <Link to="/recurring-transactions" className="nav-link">Manage</Link>
             <button className="logout-button" onClick={handleLogout}>
               Logout
             </button>
