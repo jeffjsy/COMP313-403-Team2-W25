@@ -6,6 +6,7 @@ const authRoutes = require('./routes/Auth');
 const goalRoutes = require('./routes/goalRoutes');
 const budgetsRoutes = require('./routes/budgetRoutes');
 const recurringRoutes = require('./routes/recurringRoutes');
+const cronJobs = require("./utils/cronJobs");
 
 const app = express();
 app.use(express.json());

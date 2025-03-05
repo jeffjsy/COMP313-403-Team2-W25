@@ -32,13 +32,16 @@ const RecurringTransactions = () => {
     // 🔹 Add a New Recurring Transaction
     const handleAddTransaction = async () => {
         if (!amount || !category || !nextOccurrence) {
-            toast.warn("Please fill all fields!");
+            toast.warn("Please fill all fields.");
             return;
         }
+
+        const selectedDate = new Date(`${nextOccurrence}T00:00:00Z`);
+
         try {
             const res = await axios.post(
                 "http://localhost:5000/api/recurring-transactions",
-                { amount: parseFloat(amount), category, recurrence, nextOccurrence },
+                { amount: parseFloat(amount), category, recurrence, nextOccurrence: selectedDate.toISOString() },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setTransactions([...transactions, res.data]);
@@ -103,7 +106,8 @@ const RecurringTransactions = () => {
             <ul className="transaction-list">
                 {transactions.map((t) => (
                     <li key={t._id}>
-                        {t.category} - ${t.amount} ({t.recurrence}) | Next: {new Date(t.nextOccurrence).toLocaleDateString()}
+                        {t.category} - ${t.amount} ({t.recurrence}) | Next: {new Date(t.nextOccurrence).toISOString().split("T")[0]}
+
                         <button onClick={() => handleDeleteTransaction(t._id)} className="delete-button">
                             ❌ Cancel
                         </button>
