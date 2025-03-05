@@ -71,24 +71,25 @@ const RecurringTransactions = () => {
     };
 
     return (
-        <div className="recurring-transactions-container">
-            <h2>Manage Recurring Transactions</h2>
+        <div className="container">
+            <h2 className="title">Manage Recurring Transactions</h2>
 
-            {/* 🔹 Form to Add Recurring Transaction */}
-            <div className="add-transaction">
+            <div className="transaction-card">
                 <input
                     type="number"
                     placeholder="Amount"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
+                    className="input-field"
                 />
                 <input
                     type="text"
                     placeholder="Category"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
+                    className="input-field"
                 />
-                <select value={recurrence} onChange={(e) => setRecurrence(e.target.value)}>
+                <select value={recurrence} onChange={(e) => setRecurrence(e.target.value)} className="input-field">
                     <option value="daily">Daily</option>
                     <option value="weekly">Weekly</option>
                     <option value="bi-weekly">Bi-Weekly</option>
@@ -98,19 +99,21 @@ const RecurringTransactions = () => {
                     type="date"
                     value={nextOccurrence}
                     onChange={(e) => setNextOccurrence(e.target.value)}
+                    className="input-field"
                 />
-                <button onClick={handleAddTransaction}>Add Recurring Transaction</button>
+                <button onClick={handleAddTransaction} className="add-button">Add Recurring Transaction</button>
             </div>
 
-            {/* 🔹 Display Recurring Transactions */}
             <ul className="transaction-list">
                 {transactions.map((t) => (
-                    <li key={t._id}>
-                        {t.category} - ${t.amount} ({t.recurrence}) | Next: {new Date(t.nextOccurrence).toISOString().split("T")[0]}
-
-                        <button onClick={() => handleDeleteTransaction(t._id)} className="delete-button">
-                            ❌ Cancel
-                        </button>
+                    <li key={t._id} className="transaction-item">
+                        <div className="transaction-info">
+                            <span className="transaction-category">{t.category}</span> - 
+                            <span className="transaction-amount">${t.amount}</span>
+                            <span className="transaction-recurrence">({t.recurrence})</span>
+                            <span className="transaction-date"> | Next: {new Date(t.nextOccurrence).toISOString().split("T")[0]}</span>
+                        </div>
+                        <button onClick={() => handleDeleteTransaction(t._id)} className="delete-button">❌ Cancel</button>
                     </li>
                 ))}
             </ul>
