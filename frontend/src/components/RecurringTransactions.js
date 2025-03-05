@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,7 +12,24 @@ const RecurringTransactions = () => {
     const [nextOccurrence, setNextOccurrence] = useState("");
     const token = localStorage.getItem("token");
 
-    // 🔹 Fetch Recurring Transactions
+    const fetchTransactions = useCallback(async () => {
+        try {
+            const res = await axios.get("http://localhost:5000/api/recurring-transactions", {
+                headers: { Authorization: `Bearer ${token}`},
+            });
+            setTransactions(res.data);
+        } catch (err) {
+            console.error("Error fetching transactions", err);
+            toast.error("Failed to fetch recurring transactions.");
+        }
+    }, [token]);
+
+    useEffect(() => {
+        fetchTransactions();
+    }, [fetchTransactions]);
+
+    /*
+    // Fetch Recurring Transactions
     useEffect(() => {
         fetchTransactions();
     }, []);
@@ -28,8 +45,9 @@ const RecurringTransactions = () => {
             toast.error("Failed to fetch recurring transactions.");
         }
     };
+    */
 
-    // 🔹 Add a New Recurring Transaction
+    // Add a New Recurring Transaction
     const handleAddTransaction = async () => {
         if (!amount || !category || !nextOccurrence) {
             toast.warn("Please fill all fields.");
@@ -56,7 +74,7 @@ const RecurringTransactions = () => {
         }
     };
 
-    // 🔹 Delete a Recurring Transaction
+    // Delete a Recurring Transaction
     const handleDeleteTransaction = async (id) => {
         if (!window.confirm("Delete this recurring transaction?")) return;
         try {
