@@ -6,8 +6,9 @@ const authRoutes = require('./routes/Auth');
 const goalRoutes = require('./routes/goalRoutes');
 const budgetsRoutes = require('./routes/budgetRoutes');
 const recurringRoutes = require('./routes/recurringRoutes');
-const cronJobs = require("./utils/cronJobs");
+const transactionRoutes = require('./routes/transactionRoutes');
 
+// express
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -17,6 +18,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/goals', goalRoutes);
 app.use('/api/budgets', budgetsRoutes);
 app.use('/api/recurring-transactions', recurringRoutes);
+app.use('/api/transactions', transactionRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
