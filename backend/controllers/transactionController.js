@@ -4,7 +4,12 @@ const Transaction = require('../models/Transaction');
 const getAllTransactions = async (req, res) => {
     try {
         const transactions = await Transaction.find();
-        res.status(200).json(transactions);
+        // Convert the amount to a readable number
+        const transactionsWithAmount = transactions.map(transaction => ({
+            ...transaction.toObject(),
+            amount: transaction.amount.toString()
+        }));
+        res.status(200).json(transactionsWithAmount);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -14,8 +19,14 @@ const getAllTransactions = async (req, res) => {
 const getTransactionById = async (req, res) => {
     try {
         const transaction = await Transaction.findById(req.params.id);
-        if (!transaction){ return res.status(404).json({ error: "Transaction not found" }) };
-        res.status(200).json(transaction);
+        if (!transaction) { return res.status(404).json({ error: "Transaction not found" }) };
+
+        // Convert amount to a readable format
+        const transactionWithAmount = {
+            ...transaction.toObject(),
+            amount: transaction.amount.toString()
+        };
+        res.status(200).json(transactionWithAmount);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -26,7 +37,12 @@ const createTransaction = async (req, res) => {
     try {
         const newTransaction = new Transaction(req.body);
         await newTransaction.save();
-        res.status(201).json(newTransaction);
+        // Convert the amount to a readable format before sending the response
+        const transactionResponse = {
+            ...newTransaction.toObject(),
+            amount: newTransaction.amount.toString()
+        };
+        res.status(201).json(transactionResponse);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -39,8 +55,14 @@ const updateTransaction = async (req, res) => {
             new: true,
             runValidators: true,
         });
-        if (!transaction){ return res.status(404).json({ error: "Transaction not found" }); }
-        res.status(200).json(transaction);
+        if (!transaction) { return res.status(404).json({ error: "Transaction not found" }); }
+
+        // Convert amount to a readable format before sending the response
+        const transactionResponse = {
+            ...transaction.toObject(),
+            amount: transaction.amount.toString()
+        };
+        res.status(200).json(transactionResponse);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -58,9 +80,9 @@ const deleteTransaction = async (req, res) => {
 };
 
 module.exports = {
-    getAllTransactions: getAllTransactions,
-    getTransactionById: getTransactionById,
-    createTransaction: createTransaction,
-    updateTransaction: updateTransaction,
-    deleteTransaction: deleteTransaction,
+    getAllTransactions,
+    getTransactionById,
+    createTransaction,
+    updateTransaction,
+    deleteTransaction,
 };
