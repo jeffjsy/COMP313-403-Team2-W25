@@ -7,6 +7,7 @@ const goalRoutes = require('./routes/goalRoutes');
 const budgetsRoutes = require('./routes/budgetRoutes');
 const recurringRoutes = require('./routes/recurringRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 // express
 const app = express();
@@ -19,6 +20,7 @@ app.use('/api/goals', goalRoutes);
 app.use('/api/budgets', budgetsRoutes);
 app.use('/api/recurring-transactions', recurringRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
