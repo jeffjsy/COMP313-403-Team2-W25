@@ -8,6 +8,7 @@ const budgetsRoutes = require('./routes/budgetRoutes');
 const recurringRoutes = require('./routes/recurringRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const cronJobs = require('./utils/cronJobs');
 
 // express
 const app = express();

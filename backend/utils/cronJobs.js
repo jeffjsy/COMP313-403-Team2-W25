@@ -3,10 +3,10 @@ const RecurringTransaction = require("../models/RecurringTransaction");
 const mongoose = require("mongoose");
 
 // Schedule job to run every minute for testing
-//cron.schedule("*/1 * * * *", async () => { 
+cron.schedule("*/1 * * * *", async () => { 
 
 // Schedule job to run every day at midnight
-cron.schedule(" 0 0 * * *", async () => {
+//cron.schedule(" 0 0 * * *", async () => {
     console.log("Running Cron Job: Checking for recurring transactions...");
 
     try { 
