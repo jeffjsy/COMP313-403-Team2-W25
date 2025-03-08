@@ -17,6 +17,9 @@ const Transactions = () => {
     const [amount, setAmount] = useState("");
     const [transactionDate, setTransactionDate] = useState("");
     const [recurring, setRecurring] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newCategoryName, setNewCategoryName] = useState("");
+
 
     const TRANSACTIONS_URL = "http://localhost:5000/api/transactions";
     const CATEGORIES_URL = "http://localhost:5000/api/categories";
@@ -91,6 +94,29 @@ const Transactions = () => {
         }
     };
 
+    const handleAddCategory = async () => {
+        if (!newCategoryName) {
+            toast.error("Please enter a category name.");
+            return;
+        }
+
+        try {
+            const res = await axios.post(
+                CATEGORIES_URL,
+                { name: newCategoryName },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            toast.success("Category added successfully!");
+            setNewCategoryName(""); // Clear the input
+            setIsModalOpen(false); // Close the modal
+            fetchCategories(); // Refresh the categories list
+        } catch (err) {
+            console.error("Error adding category:", err);
+            toast.error("Failed to add category.");
+        }
+    };
+
     return (
         <div className="transactions-container">
             <section className="form-section">
@@ -121,18 +147,27 @@ const Transactions = () => {
 
                     <label>
                         Category:
-                        <select
-                            value={selectedCategory}
-                            onChange={(e) => setSelectedCategory(e.target.value)}
-                            required
-                        >
-                            <option value="">Select Category</option>
-                            {categories.map((category) => (
-                                <option key={category._id} value={category._id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </select>
+                        <div className="category-select-container">
+                            <select
+                                value={selectedCategory}
+                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                required
+                            >
+                                <option value="">Select Category</option>
+                                {categories.map((category) => (
+                                    <option key={category._id} value={category._id}>
+                                        {category.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <button
+                                type="button"
+                                className="add-category-button"
+                                onClick={() => setIsModalOpen(true)}
+                            >
+                                +
+                            </button>
+                        </div>
                     </label>
 
                     <label>
@@ -158,6 +193,27 @@ const Transactions = () => {
                         Add Transaction
                     </button>
                 </form>
+            </section>
+
+            <section>
+                {/* Modal for adding a new category */}
+                {isModalOpen && (
+                    <div className="modal-overlay">
+                        <div className="modal">
+                            <h3>Add New Category</h3>
+                            <input
+                                type="text"
+                                value={newCategoryName}
+                                onChange={(e) => setNewCategoryName(e.target.value)}
+                                placeholder="Enter category name"
+                            />
+                            <div className="modal-buttons">
+                                <button onClick={handleAddCategory}>Save</button>
+                                <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </section>
 
             <section className="list-section">
