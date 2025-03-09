@@ -61,7 +61,13 @@ const Transactions = () => {
         e.preventDefault();
 
         if (!transactionType || !selectedCategory) {
-            toast.error("Please select a transaction type and category.");
+            alert("Please select a transaction type and category.");
+            return;
+        }
+
+        // Validate amount
+        if (parseFloat(amount) <= 0.0) {
+            alert("Amount must be greater than 0.0.");
             return;
         }
 
@@ -80,7 +86,7 @@ const Transactions = () => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            toast.success("Transaction added!");
+            alert("Transaction added!");
             setTransactionType("");
             setTransactionName("");
             setSelectedCategory("");
@@ -90,13 +96,13 @@ const Transactions = () => {
             fetchTransactions(); // Refresh the transaction list
         } catch (err) {
             console.error("Error adding transaction:", err);
-            toast.error("Failed to add transaction.");
+            alert("Failed to add transaction.");
         }
     };
 
     const handleAddCategory = async () => {
         if (!newCategoryName) {
-            toast.error("Please enter a category name.");
+            alert("Please enter a category name.");
             return;
         }
 
@@ -106,14 +112,13 @@ const Transactions = () => {
                 { name: newCategoryName },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-
-            toast.success("Category added successfully!");
-            setNewCategoryName(""); // Clear the input
-            setIsModalOpen(false); // Close the modal
-            fetchCategories(); // Refresh the categories list
+            alert("Category added successfully!");
+            setNewCategoryName("");
+            setIsModalOpen(false);
+            fetchCategories();
         } catch (err) {
             console.error("Error adding category:", err);
-            toast.error("Failed to add category.");
+            alert("Failed to add category.");
         }
     };
 
