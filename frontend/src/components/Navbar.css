@@ -11,10 +11,15 @@
     z-index: 1000;
   }
   
-  .nav-left, .nav-right {
+  .nav-left, .nav-center, .nav-right {
     display: flex;
     gap: 1.5rem;
     align-items: center;
+  }
+
+  .nav-center {
+    flex: 1;
+    justify-content: center;
   }
   
   .nav-link {
@@ -29,8 +34,10 @@
   }
   
   .welcome-text {
-    color: #666;
+    color: #2d3748;
     font-style: italic;
+    font-weight: 500;
+    margin: 0 1rem;
   }
 
   .logout-button {

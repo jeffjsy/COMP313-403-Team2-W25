@@ -5,6 +5,7 @@ import './Navbar.css';
 const Navbar = () => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('token');
+  const userData = JSON.parse(localStorage.getItem('user'));
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -16,15 +17,22 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-left">
         <Link to={isLoggedIn ? "/profile" : "/"} className="nav-link">
-          Home
+          Budget Planner
         </Link>
       </div>
       
-      <div className="nav-right">
-        {!isLoggedIn && (
-          <Link to="/register" className="nav-link">Register</Link>
+      <div className="nav-center">
+        {isLoggedIn && userData && (
+          <span className="welcome-message">
+            Welcome, {userData.username}
+          </span>
         )}
-        {isLoggedIn && (
+      </div>
+
+      <div className="nav-right">
+        {!isLoggedIn ? (
+          <Link to="/register" className="nav-link">Register</Link>
+        ) : (
           <>
             <Link to="/planner" className="nav-link">Planner</Link>
             <Link to="/transaction" className="nav-link">Transactions</Link>
