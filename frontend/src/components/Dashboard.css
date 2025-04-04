@@ -1,0 +1,18 @@
+/* src/components/Dashboard.css */
+.dashboard-container {
+    padding: 20px;
+  }
+  
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .chart-item {
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  

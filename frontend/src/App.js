@@ -8,6 +8,7 @@ import Transaction from './components/Transaction'
 import Goals from './components/Goals';
 import Budget from "./components/Budget";
 import RecurringTransactions from "./components/RecurringTransactions";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/recurring-transactions" element={<RecurringTransactions />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>
