@@ -5,10 +5,10 @@ const Transaction = require("../models/Transaction");
 const Category = require("../models/Category");
 
 // Schedule job to run every minute for testing
-cron.schedule("*/1 * * * *", async () => { 
+//cron.schedule("*/1 * * * *", async () => { 
 
 // Schedule job to run every day at midnight
-//cron.schedule(" 0 0 * * *", async () => {
+cron.schedule(" 0 0 * * *", async () => {
     console.log("Running Cron Job: Checking for recurring transactions...");
 
     try { 
