@@ -8,8 +8,11 @@ const RecurringTransactions = () => {
     const [transactions, setTransactions] = useState([]);
     const [amount, setAmount] = useState("");
     const [category, setCategory] = useState("");
+    const [categories, setCategories] = useState([]);
     const [recurrence, setRecurrence] = useState("monthly");
     const [nextOccurrence, setNextOccurrence] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newCategoryName, setNewCategoryName] = useState("");
     const token = localStorage.getItem("token");
 
     const fetchTransactions = useCallback(async () => {
@@ -24,28 +27,23 @@ const RecurringTransactions = () => {
         }
     }, [token]);
 
-    useEffect(() => {
-        fetchTransactions();
-    }, [fetchTransactions]);
-
-    /*
-    // Fetch Recurring Transactions
-    useEffect(() => {
-        fetchTransactions();
-    }, []);
-
-    const fetchTransactions = async () => {
+    // Function to fetch categories
+    const fetchCategories = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/recurring-transactions", {
+            const res = await axios.get("http://localhost:5000/api/categories", {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            setTransactions(res.data);
+            setCategories(res.data);
         } catch (err) {
-            console.error("Error fetching transactions:", err);
-            toast.error("Failed to fetch recurring transactions.");
+            console.error("Error fetching categories:", err);
+            toast.error("Failed to fetch categories.");
         }
-    };
-    */
+    }, [token]);
+
+    useEffect(() => {
+        fetchTransactions();
+        fetchCategories();
+    }, [fetchTransactions]);
 
     // Add a New Recurring Transaction
     const handleAddTransaction = async () => {
@@ -54,7 +52,7 @@ const RecurringTransactions = () => {
             return;
         }
 
-        const selectedDate = new Date(`${nextOccurrence}T00:00:00Z`);
+        const selectedDate = new Date(`${nextOccurrence}T12:00:00Z`);
 
         try {
             const res = await axios.post(
@@ -88,6 +86,35 @@ const RecurringTransactions = () => {
         }
     };
 
+    // Open modal to add new category
+    const handleAddCategory = async () => {
+        if (!newCategoryName) {
+            toast.warn("Please enter a category name.");
+            return;
+        }
+    
+        try {
+            const res = await axios.post(
+                "http://localhost:5000/api/categories",
+                { name: newCategoryName },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            toast.success("Category added successfully!");
+            setNewCategoryName("");
+            setIsModalOpen(false);
+            fetchCategories();
+        } catch (err) {
+            console.error("Error adding category:", err);
+            toast.error("Failed to add category.");
+        }
+    };
+
+    // Gets category name from ID
+    const getCategoryName = (categoryId) => {
+        const category = categories.find(cat => cat._id === categoryId);
+        return category ? category.name : 'Unknown';
+    };
+
     return (
         <div className="container">
             <h2 className="title">Manage Recurring Transactions</h2>
@@ -100,13 +127,25 @@ const RecurringTransactions = () => {
                     onChange={(e) => setAmount(e.target.value)}
                     className="input-field"
                 />
-                <input
-                    type="text"
-                    placeholder="Category"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="input-field"
-                />
+                <div className="category-select-container">
+                    <select 
+                        value={category} 
+                        onChange={(e) => setCategory(e.target.value)} 
+                        className="input-field"
+                    >
+                        <option value="">Select Category</option>
+                        {categories.map(cat => (
+                            <option key={cat._id} value={cat._id}>{cat.name}</option>
+                        ))}
+                    </select>
+                    <button
+                        type="button"
+                        className="add-category-button"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        +
+                    </button>
+                </div>
                 <select value={recurrence} onChange={(e) => setRecurrence(e.target.value)} className="input-field">
                     <option value="daily">Daily</option>
                     <option value="weekly">Weekly</option>
@@ -126,7 +165,7 @@ const RecurringTransactions = () => {
                 {transactions.map((t) => (
                     <li key={t._id} className="transaction-item">
                         <div className="transaction-info">
-                            <span className="transaction-category">{t.category}</span> - 
+                            <span className="transaction-category">{getCategoryName(t.category)}</span> - 
                             <span className="transaction-amount">${t.amount}</span>
                             <span className="transaction-recurrence">({t.recurrence})</span>
                             <span className="transaction-date"> | Next: {new Date(t.nextOccurrence).toISOString().split("T")[0]}</span>
@@ -135,6 +174,24 @@ const RecurringTransactions = () => {
                     </li>
                 ))}
             </ul>
+
+            {isModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h3>Add New Category</h3>
+                        <input
+                            type="text"
+                            value={newCategoryName}
+                            onChange={(e) => setNewCategoryName(e.target.value)}
+                            placeholder="Enter category name"
+                        />
+                        <div className="modal-buttons">
+                            <button onClick={handleAddCategory}>Save</button>
+                            <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

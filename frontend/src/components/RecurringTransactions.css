@@ -81,3 +81,13 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.modal input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
