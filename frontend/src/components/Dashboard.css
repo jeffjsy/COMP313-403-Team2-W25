@@ -15,4 +15,19 @@
     border: 1px solid #ddd;
     border-radius: 8px;
   }
-  
+
+  @media (max-width: 768px) {
+    .filter-controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .date-range {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .chart-item {
+      min-height: 300px;
+    }
+  }
