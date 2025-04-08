@@ -24,38 +24,68 @@ const Transactions = () => {
     const TRANSACTIONS_URL = "http://localhost:5000/api/transactions";
     const CATEGORIES_URL = "http://localhost:5000/api/categories";
 
+    const fetchCategories = useCallback(async () => {
+        const controller = new AbortController();
+
+        try {
+            const res = await axios.get(CATEGORIES_URL, {
+                headers: { Authorization: `Bearer ${token}` },
+                signal: controller.signal
+            });
+            setCategories(res.data);
+        } catch (error) {
+            if (!axios.isCancel(error)) {
+                console.error("Error fetching categories:", error);
+                toast.error("Failed to fetch categories.");
+            }
+        }
+
+        return controller;
+    }, [token]);
+
     const fetchTransactions = useCallback(async () => {
         try {
             const res = await axios.get(TRANSACTIONS_URL, {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `Bearer ${token}` }
             });
             setTransactions(res.data);
         } catch (err) {
             console.error("Error fetching transactions", err);
             toast.error("Failed to fetch transactions.");
         }
-    }, [token]);
-
-    const fetchCategories = useCallback(async () => {
-        try {
-            const res = await axios.get(CATEGORIES_URL, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setCategories(res.data);
-        } catch (error) {
-            console.error("Error fetching categories:", error);
-            toast.error("Failed to fetch categories.");
-        }
-    }, [token]);
+    }, [token, TRANSACTIONS_URL]);
 
     useEffect(() => {
         if (!token || !user) {
             navigate('/login');
             return;
         }
-        fetchTransactions();
-        fetchCategories();
-    }, [token, user, navigate, fetchTransactions, fetchCategories]);
+
+        const txController = new AbortController();
+        const fetchTx = async () => {
+            try {
+                const res = await axios.get(TRANSACTIONS_URL, {
+                    headers: { Authorization: `Bearer ${token}` },
+                    signal: txController.signal
+                });
+                setTransactions(res.data);
+            } catch (err) {
+                if (!axios.isCancel(err)) {
+                    console.error("Error fetching transactions", err);
+                    toast.error("Failed to fetch transactions.");
+                }
+            }
+        };
+
+        fetchTx();
+
+        const categoryController = fetchCategories();
+
+        return () => {
+            txController.abort();
+            categoryController.then(controller => controller.abort());
+        };
+    }, [token, user, navigate, fetchCategories]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

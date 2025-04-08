@@ -129,7 +129,6 @@
   background: #1976d2;
 }
 
-/* Financial Summary */
 .financial-summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

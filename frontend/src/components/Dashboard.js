@@ -211,10 +211,7 @@ const Dashboard = () => {
     datasets: [
       {
         data: categoryLabels.map((label) => categorySpending[label]),
-        backgroundColor: [
-          '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', 
-          '#FF9F40', '#8AC926', '#1982C4', '#6A4C93', '#F94144'
-        ],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#8AC926', '#1982C4', '#6A4C93', '#F94144'],
       },
     ],
   };
