@@ -1,4 +1,4 @@
-# Budget Planner Application (MERN Stack)
+# Budget Goals Application (MERN Stack)
 
 To run this project locally, follow these steps:
 
