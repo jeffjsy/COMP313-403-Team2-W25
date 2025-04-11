@@ -132,14 +132,31 @@ const Dashboard = () => {
   // ----------------------------
   const filteredTransactions = getFilteredTransactions();
   const filteredRecTransactions = getFilteredRecurringTransactions();
-  const incomeCount = filteredTransactions.filter((t) => t.type === "income").length;
-  const expenseCount = filteredTransactions.filter((t) => t.type === "expense").length;
-
+  /*
   const pieData = {
     labels: ["Income", "Expense"],
     datasets: [
       {
         data: [incomeCount, expenseCount],
+        backgroundColor: ["#4caf50", "#f44336"],
+      },
+    ],
+  };
+  */
+
+  const incomeSum = filteredTransactions
+  .filter((t) => t.type === "income")
+  .reduce((total, t) => total + parseFloat(t.amount), 0);
+
+  const expenseSum = filteredTransactions
+  .filter((t) => t.type === "expense")
+  .reduce((total, t) => total + parseFloat(t.amount), 0);
+
+  const pieData = {
+    labels: ["Income", "Expense"],
+    datasets: [
+      {
+        data: [incomeSum, expenseSum],
         backgroundColor: ["#4caf50", "#f44336"],
       },
     ],
