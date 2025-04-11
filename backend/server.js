@@ -17,6 +17,25 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
+// Use helmet with custom CSP configuration
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'none'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'"],
+        imgSrc: ["'self'", 'https://comp313-403-team2-w25.onrender.com'],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: [],
+      },
+    },
+  })
+);
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/goals', goalRoutes);
