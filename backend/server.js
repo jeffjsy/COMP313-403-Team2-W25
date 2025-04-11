@@ -18,18 +18,7 @@ const app = express();
 // Use helmet with custom CSP configuration
 app.use(
   helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'none'"],
-        scriptSrc: ["'self'"],
-        styleSrc: ["'self'"],
-        imgSrc: ["'self'", 'https://comp313-403-team2-w25.onrender.com'],
-        connectSrc: ["'self'"],
-        fontSrc: ["'self'"],
-        objectSrc: ["'none'"],
-        upgradeInsecureRequests: [],
-      },
-    },
+    contentSecurityPolicy: false
   })
 );
 app.use(express.static(path.join(__dirname, 'frontend', 'public')));
