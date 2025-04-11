@@ -15,6 +15,12 @@ const path = require('path');
 // express
 const app = express();
 
+// Apply CORS 
+app.use(cors({
+  origin: 'https://budget-planner-frontend-czda.onrender.com/',
+  credentials: true,
+}));
+
 // Use helmet with custom CSP configuration
 app.use(
   helmet({
@@ -24,7 +30,6 @@ app.use(
 app.use(express.static(path.join(__dirname, 'frontend', 'public')));
 
 app.use(express.json());
-app.use(cors());
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -41,7 +46,3 @@ connectDB().then(() => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
 
-app.use(cors({
-  origin: 'https://budget-planner-frontend-czda.onrender.com/',
-  credentials: true,
-}));
