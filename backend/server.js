@@ -11,13 +11,6 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const cronJobs = require('./utils/cronJobs');
 
 
-
-// express
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-
 // Use helmet with custom CSP configuration
 app.use(
   helmet({
@@ -35,6 +28,11 @@ app.use(
     },
   })
 );
+
+// express
+const app = express();
+app.use(express.json());
+app.use(cors());
 
 // Routes
 app.use('/api/auth', authRoutes);
