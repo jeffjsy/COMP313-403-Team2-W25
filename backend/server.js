@@ -42,6 +42,6 @@ connectDB().then(() => {
 });
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://budget-planner-frontend-czda.onrender.com/',
   credentials: true,
 }));
