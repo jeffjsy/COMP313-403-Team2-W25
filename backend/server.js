@@ -9,6 +9,7 @@ const recurringRoutes = require('./routes/recurringRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const cronJobs = require('./utils/cronJobs');
+const helmet = require('helmet');
 
 // express
 const app = express();
@@ -30,7 +31,7 @@ app.use(
     },
   })
 );
-
+app.use(express.static(path.join(__dirname, 'frontend', 'public')));
 
 app.use(express.json());
 app.use(cors());
