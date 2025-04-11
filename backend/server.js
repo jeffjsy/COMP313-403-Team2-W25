@@ -10,6 +10,7 @@ const transactionRoutes = require('./routes/transactionRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const cronJobs = require('./utils/cronJobs');
 const helmet = require('helmet');
+const path = require('path');
 
 // express
 const app = express();
