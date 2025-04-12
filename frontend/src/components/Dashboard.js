@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Dashboard.css";
+import api from '../axiosConfig';
 
 // Import chart components and necessary chart elements
 import { Pie, Bar, Line } from "react-chartjs-2";
@@ -45,8 +46,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   // API endpoints
-  const TRANSACTIONS_URL = "http://localhost:5000/api/transactions";
-  const RECURRING_URL = "http://localhost:5000/api/recurring-transactions";
+  const TRANSACTIONS_URL = "/api/transactions";
+  const RECURRING_URL = "/api/recurring-transactions";
 
   useEffect(() => {
     if (!token || !user) {
@@ -57,16 +58,17 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const [transactionsRes, recTransactionsRes, categoriesRes] = await Promise.all([
-          axios.get(TRANSACTIONS_URL, {
+          api.get("/api/transactions", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(RECURRING_URL, {
+          api.get("/api/recurring-transactions", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:5000/api/categories", {
+          api.get("/api/categories", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
+    
         setTransactions(transactionsRes.data);
         setRecTransactions(recTransactionsRes.data);
         setCategories(categoriesRes.data);
@@ -281,9 +283,10 @@ const Dashboard = () => {
 
   const fetchSuggestions = async () => {
     if (!user || !user._id) return toast.error("User not found");
+    
     try {
       setAiLoading(true);
-      const res = await axios.get(`http://localhost:5000/api/suggestions/${user._id}`);
+      const res = await api.get(`/api/suggestions/${user._id}`);
       setSuggestions(res.data.suggestions);
     } catch (err) {
       console.error('Failed to fetch suggestions:', err);

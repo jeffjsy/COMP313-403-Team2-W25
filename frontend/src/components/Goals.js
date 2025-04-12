@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
 import "./Goals.css";
+import api from '../axiosConfig';
 
 Modal.setAppElement("#root");
 
@@ -22,7 +23,7 @@ const Goals = () => {
 
     const fetchGoals = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/goals", {
+            const res = await api.get("/api/goals", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setGoals(res.data);
@@ -31,15 +32,15 @@ const Goals = () => {
             toast.error("Failed to fetch goals!");
         }
     };
-
+    
     const handleAddGoal = async () => {
         if (!title || !targetAmount || !deadline) {
             toast.warn("Please fill all fields!");
             return;
         }
         try {
-            const res = await axios.post(
-                "http://localhost:5000/api/goals/add",
+            const res = await api.post(
+                "/api/goals/add",
                 {
                     title,
                     targetAmount: parseFloat(targetAmount),
@@ -60,10 +61,11 @@ const Goals = () => {
             toast.error("Failed to create goal.");
         }
     };
+    
     const handleDeleteGoal = async (id) => {
         if (!window.confirm("Delete this goal?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/goals/delete/${id}`, {
+            await api.delete(`/api/goals/delete/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setGoals(goals.filter((goal) => goal._id !== id));
@@ -72,11 +74,11 @@ const Goals = () => {
             toast.error("Failed to delete goal.");
         }
     };
-
+    
     const handleAmountChange = async (id, amount, action) => {
         try {
-            const url = `http://localhost:5000/api/goals/update/${id}/${action}`;
-            const res = await axios.put(
+            const url = `/api/goals/update/${id}/${action}`;
+            const res = await api.put(
                 url,
                 { amount: parseFloat(amount) },
                 { headers: { Authorization: `Bearer ${token}` } }

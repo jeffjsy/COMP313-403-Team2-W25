@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import "./Transaction.css";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 
 const Transactions = () => {
     const navigate = useNavigate();
@@ -21,8 +23,8 @@ const Transactions = () => {
     const [newCategoryName, setNewCategoryName] = useState("");
 
 
-    const TRANSACTIONS_URL = "http://localhost:5000/api/transactions";
-    const CATEGORIES_URL = "http://localhost:5000/api/categories";
+    const TRANSACTIONS_URL = `${API_URL}/api/transactions`;
+    const CATEGORIES_URL = `${API_URL}/api/categories`;
 
     const fetchCategories = useCallback(async () => {
         const controller = new AbortController();

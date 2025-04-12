@@ -17,7 +17,7 @@ const app = express();
 
 // Apply CORS 
 app.use(cors({
-  origin: 'https://budget-planner-frontend-czda.onrender.com/',
+  origin: 'https://budget-planner-frontend-czda.onrender.com',
   credentials: true,
 }));
 

@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./RecurringTransactions.css";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 
 const RecurringTransactions = () => {
     const [transactions, setTransactions] = useState([]);
@@ -17,7 +19,7 @@ const RecurringTransactions = () => {
 
     const fetchTransactions = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/recurring-transactions", {
+            const res = await axios.get(`${API_URL}/api/recurring-transactions`, {
                 headers: { Authorization: `Bearer ${token}`},
             });
             setTransactions(res.data);
@@ -30,7 +32,7 @@ const RecurringTransactions = () => {
     // Function to fetch categories
     const fetchCategories = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/categories", {
+            const res = await axios.get(`${API_URL}/api/categories`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setCategories(res.data);
@@ -56,7 +58,7 @@ const RecurringTransactions = () => {
 
         try {
             const res = await axios.post(
-                "http://localhost:5000/api/recurring-transactions",
+                `${API_URL}/api/recurring-transactions`,
                 { amount: parseFloat(amount), category, recurrence, nextOccurrence: selectedDate.toISOString() },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -76,7 +78,7 @@ const RecurringTransactions = () => {
     const handleDeleteTransaction = async (id) => {
         if (!window.confirm("Delete this recurring transaction?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/recurring-transactions/${id}`, {
+            await axios.delete(`${API_URL}/api/recurring-transactions/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setTransactions(transactions.filter((t) => t._id !== id));
@@ -95,7 +97,7 @@ const RecurringTransactions = () => {
     
         try {
             const res = await axios.post(
-                "http://localhost:5000/api/categories",
+                `${API_URL}/api/categories`,
                 { name: newCategoryName },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

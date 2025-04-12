@@ -19,15 +19,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password
-      });
-      
-      // Store token and redirect
+      const res = await api.post('/api/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
       navigate('/profile');
-      
     } catch (err) {
       const errorMessage = err.response?.data?.msg || 'Login failed';
       alert(errorMessage);
